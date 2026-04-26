@@ -13,6 +13,7 @@ import {
 import footballHero from "../assets/football-hero.png";
 import { ThemeContext } from "../context/theme-context";
 import { getAllPosts } from "../api/postsApi";
+import { useUsername } from "../components/authWrapper/authContext";
 
 const stats = [
   { icon: Newspaper, value: "1,200+", label: "Articles" },
@@ -23,6 +24,7 @@ const stats = [
 function HomePage() {
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
+  const username = useUsername();
 
   const [featuredPosts, setFeaturedPosts] = useState([]);
 
@@ -71,13 +73,19 @@ function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Link
-                to="/login"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C83803] px-7 py-4 text-base font-black text-white shadow-lg shadow-black/30 transition hover:bg-[#FF4C14]"
-              >
-                <LogIn size={20} />
-                Login
-              </Link>
+              {username ? (
+                <span className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C83803] px-7 py-4 text-base font-black text-white shadow-lg shadow-black/30">
+                  Hi, {username}
+                </span>
+              ) : (
+                <Link
+                  to="/login"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C83803] px-7 py-4 text-base font-black text-white shadow-lg shadow-black/30 transition hover:bg-[#FF4C14]"
+                >
+                  <LogIn size={20} />
+                  Login
+                </Link>
+              )}
               <Link
                 to="/blog"
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#69BE28] bg-[#0B162A]/70 px-7 py-4 text-base font-black text-white backdrop-blur transition hover:bg-[#69BE28] hover:text-[#0B162A]"
