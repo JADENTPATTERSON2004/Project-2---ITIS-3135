@@ -29,6 +29,17 @@ function Navbar() {
         Contact
       </Link>
 
+      <Link
+        to="/login"
+        className={`text-sm font-semibold transition ${
+          theme === "dark"
+            ? "text-gray-200 hover:text-blue-400"
+            : "text-gray-700 hover:text-blue-600"
+        }`}
+      >
+        Login
+      </Link>
+
       <button
         onClick={toggleTheme}
         className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${

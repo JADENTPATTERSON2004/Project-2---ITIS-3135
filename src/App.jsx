@@ -6,6 +6,7 @@ import BlogPostsPage from "./pages/BlogPostsPage";
 import IndividualPostPage from "./pages/IndividualPostPage";
 import ContactPage from "./pages/ContactPage";
 import { ThemeContext } from "./context/ThemeContext";
+import Login from "./components/login/Login";
 
 function App() {
   const { theme } = useContext(ThemeContext);
