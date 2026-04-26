@@ -1,30 +1,78 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LockKeyhole } from "lucide-react";
 import CommentForm from "./CommentForm";
 import { ThemeContext } from "../../context/theme-context";
 import { useUsername } from "../authWrapper/authContext";
+import { fetchComments, createComment } from "../../api/commentsApi";
 
-function CommentSection({ initialComments = [] }) {
+function formatDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function CommentSection({ postId }) {
   const { theme } = useContext(ThemeContext);
   const username = useUsername();
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState(initialComments);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const isDark = theme === "dark";
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (!postId) return undefined;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    fetchComments(postId)
+      .then((data) => {
+        if (!cancelled) setComments(data);
+      })
+      .catch((err) => {
+        if (!cancelled)
+          setError(
+            err?.message?.includes("Network")
+              ? "Could not reach the comments API. Run `npm run server`."
+              : err?.message || "Failed to load comments"
+          );
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [postId]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!username || !comment.trim() || submitting) return;
 
-    if (!username || !comment.trim()) return;
-
-    setComments([
-      {
+    setSubmitting(true);
+    try {
+      const created = await createComment({
+        postId,
         name: username,
         text: comment.trim(),
-      },
-      ...comments,
-    ]);
-    setComment("");
+      });
+      setComments((prev) => [created, ...prev]);
+      setComment("");
+      setError(null);
+    } catch (err) {
+      setError(err?.message || "Failed to post comment");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -36,7 +84,9 @@ function CommentSection({ initialComments = [] }) {
       }`}
     >
       <h3 className={isDark ? "mb-4 text-2xl font-black text-white" : "mb-4 text-2xl font-black text-[#0B162A]"}>
-        Comments
+        Comments {comments.length > 0 && (
+          <span className="text-[#69BE28]">({comments.length})</span>
+        )}
       </h3>
 
       {username ? (
@@ -45,6 +95,7 @@ function CommentSection({ initialComments = [] }) {
           comment={comment}
           setComment={setComment}
           handleSubmit={handleSubmit}
+          submitting={submitting}
         />
       ) : (
         <div
@@ -76,24 +127,41 @@ function CommentSection({ initialComments = [] }) {
         </div>
       )}
 
+      {error && (
+        <div className="mb-4 rounded-lg border border-[#C83803]/40 bg-[#C83803]/10 p-3 text-sm text-[#C83803]">
+          {error}
+        </div>
+      )}
+
       <div className="space-y-4">
-        {comments.length === 0 ? (
+        {loading ? (
+          <p className={isDark ? "text-[#A5ACAF]" : "text-slate-500"}>
+            Loading comments...
+          </p>
+        ) : comments.length === 0 ? (
           <p className={isDark ? "text-[#A5ACAF]" : "text-slate-500"}>
             No comments yet. Be the first to comment after logging in.
           </p>
         ) : (
-          comments.map((item, index) => (
+          comments.map((item) => (
             <div
-              key={`${item.name}-${index}`}
+              key={item.id}
               className={`rounded-lg border p-4 ${
                 isDark
                   ? "border-[#A5ACAF]/20 bg-[#0B162A]"
                   : "border-[#002244]/10 bg-[#F4F7F9]"
               }`}
             >
-              <p className={isDark ? "font-black text-white" : "font-black text-[#0B162A]"}>
-                {item.name}
-              </p>
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <p className={isDark ? "font-black text-white" : "font-black text-[#0B162A]"}>
+                  {item.name}
+                </p>
+                {item.createdAt && (
+                  <p className={isDark ? "text-xs text-[#A5ACAF]" : "text-xs text-slate-500"}>
+                    {formatDate(item.createdAt)}
+                  </p>
+                )}
+              </div>
               <p className={isDark ? "mt-2 text-[#D8DEE9]" : "mt-2 text-slate-700"}>
                 {item.text}
               </p>

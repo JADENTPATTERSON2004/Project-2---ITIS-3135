@@ -1,16 +1,51 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, CalendarDays, Clock3, UserRound } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock3, ExternalLink, UserRound } from "lucide-react";
 import CommentSection from "../components/blog/CommentSection";
 import footballHero from "../assets/football-hero.png";
 import { ThemeContext } from "../context/theme-context";
-import { nflPosts } from "../data/nflPosts";
+import { getPostById } from "../api/postsApi";
 
 function IndividualPostPage() {
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
-  const post = nflPosts.find((item) => item.id === Number(id));
+
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Track the id we're currently loading so a re-render with a new id
+  // resets loading state without calling setState directly inside useEffect.
+  const [loadingId, setLoadingId] = useState(id);
+  if (loadingId !== id) {
+    setLoadingId(id);
+    setLoading(true);
+    setPost(null);
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+    getPostById(id)
+      .then((data) => {
+        if (!cancelled) setPost(data);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  if (loading) {
+    return (
+      <section className="mx-auto w-full max-w-4xl px-6 py-10 text-center">
+        <p className={isDark ? "text-[#A5ACAF]" : "text-slate-500"}>
+          Loading post...
+        </p>
+      </section>
+    );
+  }
 
   if (!post) {
     return (
@@ -24,6 +59,12 @@ function IndividualPostPage() {
       </section>
     );
   }
+
+  // post.image is supplied by the API:
+  //   - ESPN posts: ESPN's article image
+  //   - Local posts: an image pulled from a matching ESPN article (by team)
+  //   - If neither resolves, fall back to the bundled football-hero asset.
+  const heroImage = post.image || footballHero;
 
   return (
     <section className="mx-auto w-full max-w-5xl space-y-8 px-6 py-10">
@@ -43,7 +84,7 @@ function IndividualPostPage() {
         }`}
       >
         <div className="relative h-72 overflow-hidden">
-          <img src={footballHero} alt="" className="h-full w-full object-cover" />
+          <img src={heroImage} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#061222] via-[#061222]/50 to-transparent" />
           <div className="absolute bottom-0 left-0 p-8">
             <span className="rounded-full bg-[#C83803] px-3 py-2 text-xs font-black uppercase text-white">
@@ -75,6 +116,18 @@ function IndividualPostPage() {
             {post.body}
           </p>
 
+          {post.link && (
+            <a
+              href={post.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 font-black text-[#69BE28] transition hover:text-[#C83803]"
+            >
+              Read the full story on ESPN
+              <ExternalLink size={18} />
+            </a>
+          )}
+
           <div
             className={`mt-8 rounded-lg border p-5 ${
               isDark
@@ -90,7 +143,7 @@ function IndividualPostPage() {
         </div>
       </article>
 
-      <CommentSection key={post.id} initialComments={post.comments} />
+      <CommentSection postId={post.id} />
     </section>
   );
 }

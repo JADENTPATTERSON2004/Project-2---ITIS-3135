@@ -1,16 +1,65 @@
-# React + Vite
+# Patterhorn Insider
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An NFL blog built with React + Vite. Posts come from two sources, both
+exposed through a shared API layer in [`src/api`](src/api):
 
-Currently, two official plugins are available:
+1. **Our own REST API** powered by [json-server](https://github.com/typicode/json-server),
+   serving the four hand-written articles + every user-submitted comment.
+   Data lives in [`server/db.json`](server/db.json).
+2. **ESPN's public NFL news API** (no key required), which adds live
+   articles to the blog every page load.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Comments persist to the local json-server, so they survive refreshes
+and are visible to anyone hitting the same dev API.
 
-## React Compiler
+## Running locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+You need **two** processes running side by side:
 
-## Expanding the ESLint configuration
+```bash
+# Terminal 1 - the REST API for posts and comments (port 4000)
+npm run server
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# Terminal 2 - the React app (port 5173 by default)
+npm run dev
+```
+
+Then open the URL Vite prints (typically http://localhost:5173).
+
+The frontend talks to `http://localhost:4000` by default. Override with
+a `VITE_API_URL` env var in `.env.local` if you host the API elsewhere.
+
+## API endpoints (json-server)
+
+| Method | URL | Description |
+|---|---|---|
+| GET    | `/posts`                                    | All hand-written posts |
+| GET    | `/posts/:id`                                | Single hand-written post |
+| GET    | `/comments?postId=:id&_sort=createdAt&_order=desc` | Comments for a post |
+| POST   | `/comments`                                 | Create a comment |
+
+ESPN articles are fetched directly from
+`https://site.api.espn.com/apis/site/v2/sports/football/nfl/news` in the
+browser and merged with the local posts in
+[`src/api/postsApi.js`](src/api/postsApi.js).
+
+## Project structure
+
+```
+server/db.json                  # local API data (posts + comments)
+src/api/nflApi.js               # ESPN fetch + normalization
+src/api/postsApi.js             # merges local + ESPN posts
+src/api/commentsApi.js          # json-server CRUD for comments
+src/components/blog/            # BlogList, BlogPost, CommentSection, CommentForm
+src/pages/                      # HomePage, BlogPostsPage, IndividualPostPage, ...
+```
+
+## Scripts
+
+| Script | What it does |
+|---|---|
+| `npm run dev`     | Start Vite dev server |
+| `npm run server`  | Start json-server on port 4000 watching `server/db.json` |
+| `npm run build`   | Production build |
+| `npm run preview` | Preview the production build |
+| `npm run lint`    | Run ESLint |

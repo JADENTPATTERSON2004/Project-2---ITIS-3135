@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import footballHero from "../assets/football-hero.png";
 import { ThemeContext } from "../context/theme-context";
-import { featuredPosts } from "../data/nflPosts";
+import { getAllPosts } from "../api/postsApi";
 
 const stats = [
   { icon: Newspaper, value: "1,200+", label: "Articles" },
@@ -23,6 +23,22 @@ const stats = [
 function HomePage() {
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
+
+  const [featuredPosts, setFeaturedPosts] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    getAllPosts()
+      .then((all) => {
+        if (!cancelled) setFeaturedPosts(all.slice(0, 3));
+      })
+      .catch(() => {
+        if (!cancelled) setFeaturedPosts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className={isDark ? "bg-[#0B162A] text-white" : "bg-[#F4F7F9] text-[#0B162A]"}>
@@ -120,7 +136,7 @@ function HomePage() {
             >
               <div className="relative h-44 overflow-hidden">
                 <img
-                  src={footballHero}
+                  src={post.image || footballHero}
                   alt=""
                   className={`h-full w-full object-cover transition duration-500 group-hover:scale-105 ${
                     index === 1 ? "object-center" : index === 2 ? "object-right" : "object-left"

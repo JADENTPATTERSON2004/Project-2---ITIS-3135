@@ -19,7 +19,7 @@ function BlogPost({ post }) {
     >
       <div className="relative h-52 overflow-hidden">
         <img
-          src={footballHero}
+          src={post.image || footballHero}
           alt=""
           className="h-full w-full object-cover transition duration-500 hover:scale-105"
         />

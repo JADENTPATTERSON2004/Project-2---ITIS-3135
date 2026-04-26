@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Send } from "lucide-react";
 import { ThemeContext } from "../../context/theme-context";
 
-function CommentForm({ username, comment, setComment, handleSubmit }) {
+function CommentForm({ username, comment, setComment, handleSubmit, submitting = false }) {
   const { theme } = useContext(ThemeContext);
   const isDark = theme === "dark";
 
@@ -25,10 +25,11 @@ function CommentForm({ username, comment, setComment, handleSubmit }) {
 
       <button
         type="submit"
-        className="inline-flex items-center gap-2 rounded-lg bg-[#C83803] px-5 py-3 font-black text-white transition hover:bg-[#FF4C14]"
+        disabled={submitting}
+        className="inline-flex items-center gap-2 rounded-lg bg-[#C83803] px-5 py-3 font-black text-white transition hover:bg-[#FF4C14] disabled:cursor-not-allowed disabled:opacity-60"
       >
         <Send size={18} />
-        Submit Comment
+        {submitting ? "Submitting..." : "Submit Comment"}
       </button>
     </form>
   );

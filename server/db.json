@@ -1,0 +1,251 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "category": "Game Recap",
+      "title": "Bears Edge Rival in Thrilling Monday Night Showdown",
+      "excerpt": "Clutch plays and a fierce defensive front helped Chicago finish a statement win.",
+      "body": "Chicago leaned on a hard-hitting defense, timely third-down throws, and a late red-zone stand to close out a prime-time win. The offense did not need to be perfect because the defense kept flipping field position and forcing long possessions into punts.",
+      "author": "Patterhorn Staff",
+      "team": "Chicago Bears",
+      "date": "May 20, 2024",
+      "readTime": "5 min read",
+      "image": null,
+      "link": null,
+      "source": "local"
+    },
+    {
+      "id": "2",
+      "category": "Analysis",
+      "title": "Top 5 Defensive Players to Watch This Season",
+      "excerpt": "A breakdown of the most disruptive defenders who could tilt every matchup.",
+      "body": "Elite defenses are built on players who can erase a play before it develops. This watch list focuses on pass rush pressure, coverage range, tackling reliability, and how each player changes an opponent's game plan.",
+      "author": "Avery Brooks",
+      "team": "Seattle Seahawks",
+      "date": "May 19, 2024",
+      "readTime": "6 min read",
+      "image": null,
+      "link": null,
+      "source": "local"
+    },
+    {
+      "id": "3",
+      "category": "NFL News",
+      "title": "Free Agency Buzz: Biggest Moves So Far",
+      "excerpt": "Tracking the signings and trades that could reshape the playoff picture.",
+      "body": "The biggest free-agency wins are not always the loudest contracts. Depth signings, scheme fits, and smart veteran additions can matter just as much when injuries hit and November football starts separating contenders from hopefuls.",
+      "author": "Patterhorn Staff",
+      "team": "NFL",
+      "date": "May 18, 2024",
+      "readTime": "4 min read",
+      "image": null,
+      "link": null,
+      "source": "local"
+    },
+    {
+      "id": "4",
+      "category": "Film Room",
+      "title": "How Seattle's Secondary Can Control Tempo",
+      "excerpt": "The Seahawks have the range and physicality to make quarterbacks hesitate.",
+      "body": "Seattle's defensive backs are at their best when the front and coverage work together. Press looks, late rotations, and clean tackling after the catch can shrink windows and force offenses into safer, shorter throws.",
+      "author": "Taylor Reed",
+      "team": "Seattle Seahawks",
+      "date": "May 17, 2024",
+      "readTime": "7 min read",
+      "image": null,
+      "link": null,
+      "source": "local"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "postId": "1",
+      "name": "Maya R.",
+      "text": "That fourth-quarter stop felt like the whole game turning at once.",
+      "createdAt": "2024-05-20T23:14:00.000Z"
+    },
+    {
+      "id": 2,
+      "postId": "1",
+      "name": "Jordan",
+      "text": "The pass rush finally looked like it could take over when it mattered.",
+      "createdAt": "2024-05-21T01:02:00.000Z"
+    },
+    {
+      "id": 3,
+      "postId": "1",
+      "name": "ChiCityChris",
+      "text": "Bears defense is for real. Been waiting years to say that on a Monday night.",
+      "createdAt": "2024-05-21T02:48:00.000Z"
+    },
+    {
+      "id": 4,
+      "postId": "1",
+      "name": "BlitzKing",
+      "text": "Field position decided this. Special teams quietly won the game.",
+      "createdAt": "2024-05-21T04:31:00.000Z"
+    },
+    {
+      "id": 5,
+      "postId": "1",
+      "name": "GridironGreg",
+      "text": "The third-down conversion rate in the second half was unreal.",
+      "createdAt": "2024-05-21T12:09:00.000Z"
+    },
+    {
+      "id": 6,
+      "postId": "1",
+      "name": "RedZone_Ricky",
+      "text": "Coaching staff finally trusted the offense in clutch moments. That's the difference.",
+      "createdAt": "2024-05-21T15:44:00.000Z"
+    },
+    {
+      "id": 7,
+      "postId": "1",
+      "name": "12thManTanya",
+      "text": "Tough loss to watch as a fan of the other side, but credit where it's due.",
+      "createdAt": "2024-05-22T08:20:00.000Z"
+    },
+    {
+      "id": 8,
+      "postId": "2",
+      "name": "Chris",
+      "text": "Love seeing defensive analysis get the spotlight for once.",
+      "createdAt": "2024-05-19T18:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "postId": "2",
+      "name": "Devon89",
+      "text": "Number 1 on this list is going to terrorize quarterbacks all year.",
+      "createdAt": "2024-05-19T19:33:00.000Z"
+    },
+    {
+      "id": 10,
+      "postId": "2",
+      "name": "AvaQB1",
+      "text": "Coverage range is so underrated. Great call on including it.",
+      "createdAt": "2024-05-19T22:11:00.000Z"
+    },
+    {
+      "id": 11,
+      "postId": "2",
+      "name": "PocketPete",
+      "text": "Surprised one name didn't make the cut, but solid five.",
+      "createdAt": "2024-05-20T01:47:00.000Z"
+    },
+    {
+      "id": 12,
+      "postId": "2",
+      "name": "DawgPound44",
+      "text": "Tackling reliability matters more than highlight plays. Nailed it.",
+      "createdAt": "2024-05-20T10:05:00.000Z"
+    },
+    {
+      "id": 13,
+      "postId": "2",
+      "name": "NickelNate",
+      "text": "This is the kind of breakdown I subscribe for. More like this.",
+      "createdAt": "2024-05-20T14:22:00.000Z"
+    },
+    {
+      "id": 14,
+      "postId": "3",
+      "name": "BigBlueBrian",
+      "text": "Depth signings always end up being the difference in November.",
+      "createdAt": "2024-05-18T16:45:00.000Z"
+    },
+    {
+      "id": 15,
+      "postId": "3",
+      "name": "DraftDayDrew",
+      "text": "Watch the third-tier signings. That's where smart front offices win.",
+      "createdAt": "2024-05-18T18:12:00.000Z"
+    },
+    {
+      "id": 16,
+      "postId": "3",
+      "name": "FantasyFranco",
+      "text": "Already updating my fantasy rankings based on these moves.",
+      "createdAt": "2024-05-18T21:34:00.000Z"
+    },
+    {
+      "id": 17,
+      "postId": "3",
+      "name": "VeteranVince",
+      "text": "Veteran leadership in the locker room can swing a season. Don't underrate it.",
+      "createdAt": "2024-05-19T01:08:00.000Z"
+    },
+    {
+      "id": 18,
+      "postId": "3",
+      "name": "PlayActionPat",
+      "text": "Scheme fit > contract size, every single time.",
+      "createdAt": "2024-05-19T05:50:00.000Z"
+    },
+    {
+      "id": 19,
+      "postId": "3",
+      "name": "RookieRiley",
+      "text": "Combine this with the draft and a few teams suddenly look really different.",
+      "createdAt": "2024-05-19T11:27:00.000Z"
+    },
+    {
+      "id": 20,
+      "postId": "3",
+      "name": "Coach_Carla",
+      "text": "Cap management is the unsung GM skill. This article gets it.",
+      "createdAt": "2024-05-19T13:55:00.000Z"
+    },
+    {
+      "id": 21,
+      "postId": "4",
+      "name": "ZoneReadZane",
+      "text": "Press coverage on the outside is where Seattle wins or loses.",
+      "createdAt": "2024-05-17T17:00:00.000Z"
+    },
+    {
+      "id": 22,
+      "postId": "4",
+      "name": "SidelineSasha",
+      "text": "Late rotations are so disruptive when the front holds up. Great breakdown.",
+      "createdAt": "2024-05-17T19:24:00.000Z"
+    },
+    {
+      "id": 23,
+      "postId": "4",
+      "name": "EndZoneEli",
+      "text": "Tackling after the catch was their weak spot last year. Glad to see it addressed.",
+      "createdAt": "2024-05-17T22:48:00.000Z"
+    },
+    {
+      "id": 24,
+      "postId": "4",
+      "name": "PylonPaul",
+      "text": "If their pass rush gives them even one second more, this defense is elite.",
+      "createdAt": "2024-05-18T02:15:00.000Z"
+    },
+    {
+      "id": 25,
+      "postId": "4",
+      "name": "AudibleAlex",
+      "text": "Quarterbacks hate having to second-guess underneath windows. Article nails the why.",
+      "createdAt": "2024-05-18T07:33:00.000Z"
+    },
+    {
+      "id": 26,
+      "postId": "4",
+      "name": "ShotgunShay",
+      "text": "Hawks fan here — finally a piece that gets what the staff is building.",
+      "createdAt": "2024-05-18T09:46:00.000Z"
+    },
+    {
+      "postId": "4",
+      "name": "Jaden",
+      "text": "this is awesome!",
+      "createdAt": "2026-04-26T20:58:19.866Z",
+      "id": 27
+    }
+  ]
+}
