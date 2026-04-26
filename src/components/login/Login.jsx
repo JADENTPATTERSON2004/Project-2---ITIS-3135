@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { ThemeContext } from '../../context/ThemeContext'
+import { useAuth } from '../authWrapper/authContext'
 
 function Login() {
+  const { login } = useAuth();
   const { theme } = useContext(ThemeContext);
   const [userData, setUserData] = useState({
     username: '',
@@ -10,7 +12,8 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
+    // console.log(userData);
+    login(userData.username);
   };
 
   return (

@@ -1,44 +1,28 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
+import { useUsername, useAuth } from "../authWrapper/authContext";
 
 function Navbar() {
   const { theme, toggleTheme } = useContext(ThemeContext);
+  const username = useUsername();
+  const { logout } = useAuth();
+
+  const linkClass = `text-sm font-semibold transition ${
+    theme === "dark"
+      ? "text-gray-200 hover:text-blue-400"
+      : "text-gray-700 hover:text-blue-600"
+  }`;
 
   return (
     <nav className="flex items-center gap-6">
-      <Link
-        to="/"
-        className={`text-sm font-semibold transition ${
-          theme === "dark"
-            ? "text-gray-200 hover:text-blue-400"
-            : "text-gray-700 hover:text-blue-600"
-        }`}
-      >
-        Home
-      </Link>
-
-      <Link
-        to="/contact"
-        className={`text-sm font-semibold transition ${
-          theme === "dark"
-            ? "text-gray-200 hover:text-blue-400"
-            : "text-gray-700 hover:text-blue-600"
-        }`}
-      >
-        Contact
-      </Link>
-
-      <Link
-        to="/login"
-        className={`text-sm font-semibold transition ${
-          theme === "dark"
-            ? "text-gray-200 hover:text-blue-400"
-            : "text-gray-700 hover:text-blue-600"
-        }`}
-      >
-        Login
-      </Link>
+      <Link to="/" className={linkClass}>Home</Link>
+      <Link to="/contact" className={linkClass}>Contact</Link>
+      {username ? (
+        <button onClick={logout} className={linkClass}>Hi {username}, Logout</button>
+      ) : (
+        <Link to="/login" className={linkClass}>Login</Link>
+      )}
 
       <button
         onClick={toggleTheme}

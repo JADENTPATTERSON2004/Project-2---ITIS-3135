@@ -7,33 +7,36 @@ import IndividualPostPage from "./pages/IndividualPostPage";
 import ContactPage from "./pages/ContactPage";
 import { ThemeContext } from "./context/ThemeContext";
 import Login from "./components/login/Login";
+import { AuthProvider } from "./components/authWrapper/authProvider";
 
 function App() {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Router>
-      <div
-        className={`min-h-screen flex flex-col ${
-          theme === "dark"
-            ? "bg-gray-900 text-white"
-            : "bg-gray-50 text-gray-900"
-        }`}
-      >
-        <Header />
+    <AuthProvider>
+      <Router>
+        <div
+          className={`min-h-screen flex flex-col ${
+            theme === "dark"
+              ? "bg-gray-900 text-white"
+              : "bg-gray-50 text-gray-900"
+          }`}
+        >
+          <Header />
 
-        <main className="mx-auto w-full max-w-4xl flex-grow px-6 py-10">
-          <Routes>
-            <Route path="/" element={<BlogPostsPage />} />
-            <Route path="/post/:id" element={<IndividualPostPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
+          <main className="mx-auto w-full max-w-4xl flex-grow px-6 py-10">
+            <Routes>
+              <Route path="/" element={<BlogPostsPage />} />
+              <Route path="/post/:id" element={<IndividualPostPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </main>
 
-        <Footer />
-      </div>
-    </Router>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
