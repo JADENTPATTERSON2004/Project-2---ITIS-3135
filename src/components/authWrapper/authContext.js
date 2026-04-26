@@ -1,12 +1,12 @@
 import { createContext, useContext } from 'react'
 
-const authContext = createContext();
+const AuthContext = createContext();
 
 export const useUsername = () => {
-    const { user } = useContext(authContext);
+    const { user } = useContext(AuthContext);
     return user ? user.username: null;
 }
 
-export const useAuth = () => useContext(authContext);
+export const useAuth = () => useContext(AuthContext);
 
-export default authContext;
+export default AuthContext;

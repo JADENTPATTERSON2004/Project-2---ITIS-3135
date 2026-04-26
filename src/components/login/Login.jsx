@@ -1,47 +1,53 @@
-import React, { useState, useContext } from 'react'
-import { ThemeContext } from '../../context/ThemeContext'
-import { useAuth } from '../authWrapper/authContext'
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../context/theme-context";
+import { useAuth } from "../authWrapper/authContext";
 
 function Login() {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const { theme } = useContext(ThemeContext);
   const [userData, setUserData] = useState({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
+  const isDark = theme === "dark";
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(userData);
-    login(userData.username);
+    if (!userData.username.trim()) return;
+    login(userData.username.trim());
+    navigate("/blog");
   };
 
   return (
     <section
-      className={`mx-auto max-w-2xl rounded-2xl border p-8 shadow-sm ${
-        theme === "dark"
-          ? "border-gray-700 bg-gray-800"
-          : "border-gray-200 bg-white"
+      className={`mx-auto my-10 w-[calc(100%-3rem)] max-w-2xl rounded-lg border p-8 shadow-xl shadow-black/10 ${
+        isDark
+          ? "border-[#A5ACAF]/20 bg-[#07182A]"
+          : "border-[#002244]/15 bg-white"
       }`}
     >
-      <h2
-        className={`mb-6 text-3xl font-bold ${
-          theme === "dark" ? "text-white" : "text-gray-900"
-        }`}
-      >
-        Login
+      <p className="text-sm font-black uppercase tracking-wide text-[#69BE28]">
+        Fan access
+      </p>
+      <h2 className={isDark ? "mt-2 text-3xl font-black text-white" : "mt-2 text-3xl font-black text-[#0B162A]"}>
+        Login to join the huddle
       </h2>
+      <p className={isDark ? "mt-2 text-[#D8DEE9]" : "mt-2 text-slate-600"}>
+        Articles are open to preview. Logging in unlocks commenting.
+      </p>
 
-      <form className="space-y-5" onSubmit={onSubmit}>
+      <form className="mt-7 space-y-5" onSubmit={onSubmit}>
         <input
           type="text"
           placeholder="Username"
           value={userData.username}
           onChange={(e) => setUserData({ ...userData, username: e.target.value })}
-          className={`w-full rounded-lg border px-4 py-3 ${
-            theme === "dark"
-              ? "border-gray-600 bg-gray-900 text-white placeholder-gray-400"
-              : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+          className={`w-full rounded-lg border px-4 py-3 outline-none transition focus:border-[#69BE28] ${
+            isDark
+              ? "border-[#A5ACAF]/25 bg-[#0B162A] text-white placeholder-[#A5ACAF]"
+              : "border-[#002244]/15 bg-white text-[#0B162A] placeholder-slate-400"
           }`}
         />
 
@@ -50,22 +56,22 @@ function Login() {
           placeholder="Password"
           value={userData.password}
           onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-          className={`w-full rounded-lg border px-4 py-3 ${
-            theme === "dark"
-              ? "border-gray-600 bg-gray-900 text-white placeholder-gray-400"
-              : "border-gray-300 bg-white text-gray-900 placeholder-gray-500"
+          className={`w-full rounded-lg border px-4 py-3 outline-none transition focus:border-[#69BE28] ${
+            isDark
+              ? "border-[#A5ACAF]/25 bg-[#0B162A] text-white placeholder-[#A5ACAF]"
+              : "border-[#002244]/15 bg-white text-[#0B162A] placeholder-slate-400"
           }`}
         />
 
         <button
           type="submit"
-          className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
+          className="rounded-lg bg-[#C83803] px-6 py-3 font-black text-white transition hover:bg-[#FF4C14]"
         >
-          Submit
+          Login
         </button>
       </form>
     </section>
   );
 }
 
-export default Login
+export default Login;

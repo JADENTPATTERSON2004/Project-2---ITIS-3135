@@ -1,43 +1,48 @@
 import { useContext } from "react";
-import blogLogo from "../../assets/blogbook.png";
+import { Link } from "react-router-dom";
+import { Shield } from "lucide-react";
 import Navbar from "./Navbar";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "../../context/theme-context";
 
 function Header() {
   const { theme } = useContext(ThemeContext);
+  const isDark = theme === "dark";
 
   return (
     <header
-      className={`border-b shadow-sm ${
-        theme === "dark"
-          ? "border-gray-700 bg-gray-800"
-          : "border-gray-200 bg-white"
+      className={`sticky top-0 z-30 border-b backdrop-blur ${
+        isDark
+          ? "border-[#A5ACAF]/20 bg-[#0B162A]/95"
+          : "border-[#002244]/15 bg-white/95"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-3">
-          <img
-            src={blogLogo}
-            alt="Blog logo"
-            className="h-12 w-12 rounded-lg object-cover"
-          />
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-4">
+        <Link to="/" className="flex items-center gap-3">
+          <span className="flex h-12 w-12 items-center justify-center rounded-lg border border-[#C83803]/50 bg-[#07182A] text-[#C83803]">
+            <Shield size={28} />
+          </span>
           <div>
             <h1
-              className={`text-2xl font-bold ${
-                theme === "dark" ? "text-white" : "text-gray-900"
-              }`}
+              className={
+                isDark
+                  ? "text-xl font-black uppercase leading-5 text-white"
+                  : "text-xl font-black uppercase leading-5 text-[#0B162A]"
+              }
             >
-              Jaden Patterson
+              Patterhorn
+              <span className="block text-[#C83803]">Insider</span>
             </h1>
             <p
-              className={`text-sm ${
-                theme === "dark" ? "text-gray-300" : "text-gray-500"
-              }`}
+              className={
+                isDark
+                  ? "text-xs font-semibold text-[#A5ACAF]"
+                  : "text-xs font-semibold text-slate-500"
+              }
             >
-              Stories, ideas, and updates
+              NFL news, recaps, and fan takes
             </p>
           </div>
-        </div>
+        </Link>
 
         <Navbar />
       </div>

@@ -2,16 +2,9 @@ import BlogPost from "./BlogPost";
 
 function BlogList({ posts }) {
   return (
-    <section className="space-y-6">
+    <section className="grid gap-6 lg:grid-cols-2">
       {posts.map((post) => (
-        <BlogPost
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          content={post.content}
-          author={post.author}
-          date={post.date}
-        />
+        <BlogPost key={post.id} post={post} />
       ))}
     </section>
   );

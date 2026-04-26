@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import HomePage from "./pages/HomePage";
 import BlogPostsPage from "./pages/BlogPostsPage";
 import IndividualPostPage from "./pages/IndividualPostPage";
 import ContactPage from "./pages/ContactPage";
-import { ThemeContext } from "./context/ThemeContext";
+import { ThemeContext } from "./context/theme-context";
 import Login from "./components/login/Login";
 import { AuthProvider } from "./components/authWrapper/authProvider";
 
@@ -18,15 +19,16 @@ function App() {
         <div
           className={`min-h-screen flex flex-col ${
             theme === "dark"
-              ? "bg-gray-900 text-white"
-              : "bg-gray-50 text-gray-900"
+              ? "bg-[#0B162A] text-white"
+              : "bg-[#F4F7F9] text-[#0B162A]"
           }`}
         >
           <Header />
 
-          <main className="mx-auto w-full max-w-4xl flex-grow px-6 py-10">
+          <main className="w-full flex-grow">
             <Routes>
-              <Route path="/" element={<BlogPostsPage />} />
+              <Route path="/" element={<HomePage />} />
+              <Route path="/blog" element={<BlogPostsPage />} />
               <Route path="/post/:id" element={<IndividualPostPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/login" element={<Login />} />

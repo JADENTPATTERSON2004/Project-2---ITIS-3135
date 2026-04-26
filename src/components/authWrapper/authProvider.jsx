@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import authContext from "./authContext";
+import { useState } from "react";
+import AuthContext from "./authContext";
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const login = (username) => {
@@ -13,13 +13,13 @@ export const AuthProvider = ({children}) => {
     };
 
     return (
-        <authContext.Provider value={{
+        <AuthContext.Provider value={{
             user,
             login,
             logout
         }}
         >
             {children}
-        </authContext.Provider>
+        </AuthContext.Provider>
     );
 };

@@ -1,87 +1,96 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useContext } from "react";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, CalendarDays, Clock3, UserRound } from "lucide-react";
 import CommentSection from "../components/blog/CommentSection";
-import { ThemeContext } from "../context/ThemeContext";
+import footballHero from "../assets/football-hero.png";
+import { ThemeContext } from "../context/theme-context";
+import { nflPosts } from "../data/nflPosts";
 
 function IndividualPostPage() {
   const { id } = useParams();
   const { theme } = useContext(ThemeContext);
-
-  const [post, setPost] = useState(null);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
-      .then((response) => {
-        setPost(response.data);
-
-        return axios.get(
-          `https://jsonplaceholder.typicode.com/users/${response.data.userId}`
-        );
-      })
-      .then((response) => setUser(response.data))
-      .catch((error) =>
-        console.error("Error fetching post or user:", error)
-      );
-  }, [id]);
+  const isDark = theme === "dark";
+  const post = nflPosts.find((item) => item.id === Number(id));
 
   if (!post) {
     return (
-      <section className="text-center">
-        <h2
-          className={`mb-4 text-3xl font-bold ${
-            theme === "dark" ? "text-white" : "text-gray-900"
-          }`}
-        >
+      <section className="mx-auto w-full max-w-4xl px-6 py-10 text-center">
+        <h2 className={isDark ? "mb-4 text-3xl font-black text-white" : "mb-4 text-3xl font-black text-[#0B162A]"}>
           Post Not Found
         </h2>
-        <p className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
-          The blog post you are looking for does not exist.
+        <p className={isDark ? "text-[#D8DEE9]" : "text-slate-600"}>
+          The NFL story you are looking for does not exist.
         </p>
       </section>
     );
   }
 
   return (
-    <section className="space-y-8">
+    <section className="mx-auto w-full max-w-5xl space-y-8 px-6 py-10">
+      <Link
+        to="/blog"
+        className="inline-flex items-center gap-2 font-black text-[#69BE28] transition hover:text-[#C83803]"
+      >
+        <ArrowLeft size={18} />
+        Back to all posts
+      </Link>
+
       <article
-        className={`rounded-2xl border p-8 shadow-sm ${
-          theme === "dark"
-            ? "border-gray-700 bg-gray-800"
-            : "border-gray-200 bg-white"
+        className={`overflow-hidden rounded-lg border shadow-xl shadow-black/10 ${
+          isDark
+            ? "border-[#A5ACAF]/20 bg-[#07182A]"
+            : "border-[#002244]/15 bg-white"
         }`}
       >
-        <h2
-          className={`mb-4 text-3xl font-bold ${
-            theme === "dark" ? "text-white" : "text-gray-900"
-          }`}
-        >
-          {post.title}
-        </h2>
+        <div className="relative h-72 overflow-hidden">
+          <img src={footballHero} alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#061222] via-[#061222]/50 to-transparent" />
+          <div className="absolute bottom-0 left-0 p-8">
+            <span className="rounded-full bg-[#C83803] px-3 py-2 text-xs font-black uppercase text-white">
+              {post.category}
+            </span>
+            <h2 className="mt-4 max-w-3xl text-4xl font-black leading-tight text-white">
+              {post.title}
+            </h2>
+          </div>
+        </div>
 
-        {user && (
+        <div className="p-8">
+          <div className={isDark ? "mb-6 flex flex-wrap gap-5 text-sm text-[#A5ACAF]" : "mb-6 flex flex-wrap gap-5 text-sm text-slate-500"}>
+            <span className="inline-flex items-center gap-2">
+              <UserRound size={16} />
+              {post.author}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <CalendarDays size={16} />
+              {post.date}
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Clock3 size={16} />
+              {post.readTime}
+            </span>
+          </div>
+
+          <p className={isDark ? "text-lg leading-9 text-[#D8DEE9]" : "text-lg leading-9 text-slate-700"}>
+            {post.body}
+          </p>
+
           <div
-            className={`mb-6 text-sm ${
-              theme === "dark" ? "text-gray-400" : "text-gray-500"
+            className={`mt-8 rounded-lg border p-5 ${
+              isDark
+                ? "border-[#69BE28]/30 bg-[#0B162A]"
+                : "border-[#69BE28]/40 bg-[#F4F7F9]"
             }`}
           >
-            <p>Author: {user.name}</p>
-            <p>Email: {user.email}</p>
+            <p className="font-black text-[#69BE28]">Preview is open to everyone.</p>
+            <p className={isDark ? "mt-1 text-sm text-[#D8DEE9]" : "mt-1 text-sm text-slate-600"}>
+              You only need to log in when you want to leave a comment.
+            </p>
           </div>
-        )}
-
-        <p
-          className={`leading-8 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
-          }`}
-        >
-          {post.body}
-        </p>
+        </div>
       </article>
 
-      <CommentSection />
+      <CommentSection key={post.id} initialComments={post.comments} />
     </section>
   );
 }
