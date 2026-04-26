@@ -26,6 +26,7 @@ function App() {
             <Route path="/" element={<BlogPostsPage />} />
             <Route path="/post/:id" element={<IndividualPostPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
 
